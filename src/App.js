@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ColorPalette from "./ColorPalette";
+import PaletteList from "./PaletteList";
 import {Route, Switch} from "react-router-dom";
 import ColorSeed from "./ColorSeed";
 import {generatePalette} from "./ColorHelpers";
@@ -11,12 +12,14 @@ class App extends Component {
     })
   }
   render() {
+    console.log(ColorSeed)
     return (
     <div>
       <Switch>
-        <Route exact path="/" render={() => <h1>We will have the list of Palettes here</h1>}/>
+    <Route exact path="/" render={() => <PaletteList palette={ColorSeed}/> } />
         <Route exact path="/palette/:id" render={(routeProps) => <ColorPalette palette={generatePalette(this.findPalette(routeProps.match.params.id))}/> }/>
       </Switch>
+
     </div>
   );
   }
