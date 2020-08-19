@@ -13,13 +13,18 @@ class App extends Component {
     })
   }
   render() {
-    console.log(ColorSeed)
     return (
     <div>
       <Switch>
         <Route exact path="/" render={(routeProps) => <PaletteList palette={ColorSeed} {...routeProps} /> } />
-        <Route exact path="/palette/:id" render={(routeProps) => <ColorPalette palette={generatePalette(this.findPalette(routeProps.match.params.id))}/> }/>
-        <Route exact path="/palette/:paletteId/:colorId" render={()=> <SingleColorPalette /> } />
+        <Route exact path="/palette/:id" 
+          render={(routeProps) => <ColorPalette 
+            palette={generatePalette(this.findPalette(routeProps.match.params.id))}/> }/>
+        <Route exact path="/palette/:paletteId/:colorId" 
+          render={(routeProps)=> <SingleColorPalette 
+            colorId = {routeProps.match.params.colorId}
+            palette ={generatePalette(this.findPalette(routeProps.match.params.paletteId))}/> }
+         />
       </Switch>
 
     </div>
