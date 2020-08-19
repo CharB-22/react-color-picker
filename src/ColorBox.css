@@ -40,6 +40,9 @@
 .copy-button {
     opacity: 0;
 }
+.ColorBox .dark-text{
+    color: rgba(0, 0, 0, 0.5);
+}
 
 .ColorBox:hover .copy-button {
     opacity: 1;
@@ -57,6 +60,11 @@
     letter-spacing: 1px;
     font-size: 12px;
 }
+
+.light-text {
+    color: white;
+}
+
 
 .see-more {
     background: rgba(255, 255, 255, 0.3);
