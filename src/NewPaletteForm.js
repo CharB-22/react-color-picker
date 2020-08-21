@@ -75,27 +75,44 @@ const styles = theme => ({
       display: "flex",
       justifyContent:"center",
       alignItems: "center"
-  }
+  },
 });
+
+
 
 class NewPaletteForm extends Component {
 
-state = { 
-    open: false
-};
+    constructor(props){
+        super(props);
+        this.state = { 
+            open: false,
+            currentColor: "skyblue",
+            colors: ["purple", "#e156764"]
+        };
+        this.changeCurrentColor = this.changeCurrentColor.bind(this)
+        this.addNewColor = this.addNewColor.bind(this);
+    }
 
 
-handleDrawerOpen = () => {
-    this.setState({open: true})
-  };
 
-handleDrawerClose = () => {
-    this.setState({open: false})
-  };
+    handleDrawerOpen = () => {
+        this.setState({open: true})
+    };
 
+    handleDrawerClose = () => {
+        this.setState({open: false})
+    };
+
+    changeCurrentColor(newColor){
+    this.setState({currentColor: newColor.hex})
+    }
+
+    addNewColor() {
+        this.setState({colors: [...this.state.colors, this.state.currentColor]})
+    }
   render() {
     const {classes} = this.props;
-    const {open} = this.state;
+    const {open, currentColor, colors} = this.state;
     return (
         <div className={classes.root}>
           <CssBaseline />
@@ -145,13 +162,14 @@ handleDrawerClose = () => {
                 </Button>
             </div>
             <ChromePicker 
-            color="purple" 
-            onChangeComplete={(newColor) => console.log(newColor) }
+            color={currentColor}
+            onChangeComplete={this.changeCurrentColor}
             />
-            <form noValidate autoComplete="off">
-                <TextField id="filled-basic" label="Filled" variant="filled" />
-            </form>
-            <Button variant="contained" color="primary">
+            <Button  className={classes.buttonAddColor} 
+            variant="contained" 
+            color="primary" 
+            style={{backgroundColor: currentColor}} 
+            onClick={this.addNewColor}>
                 Add Color
             </Button>
             {/*This is where the form will be*/}
@@ -163,6 +181,7 @@ handleDrawerClose = () => {
             })}
           >
             <div className={classes.drawerHeader} />
+            {colors.map(color => <li style={{backgroundColor: color}} key={color}>{color}</li>)}
           </main>
         </div>
       );
