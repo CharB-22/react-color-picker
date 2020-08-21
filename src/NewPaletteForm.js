@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
+import DragabbleColorBox from './DragabbleColorBox'
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -57,6 +58,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
+    height: "calc(100vh - 64px)",
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -87,7 +89,7 @@ class NewPaletteForm extends Component {
         this.state = { 
             open: false,
             currentColor: "skyblue",
-            colors: ["purple", "#e156764"]
+            colors: ["purple", "#e15764"]
         };
         this.changeCurrentColor = this.changeCurrentColor.bind(this)
         this.addNewColor = this.addNewColor.bind(this);
@@ -181,7 +183,7 @@ class NewPaletteForm extends Component {
             })}
           >
             <div className={classes.drawerHeader} />
-            {colors.map(color => <li style={{backgroundColor: color}} key={color}>{color}</li>)}
+            {colors.map(color => <DragabbleColorBox key={color} color={color}/>)}
           </main>
         </div>
       );
