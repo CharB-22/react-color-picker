@@ -14,13 +14,13 @@ const styles = {
 }
 
 function DragabbleColorBox(props) {
-    const {color} = props;
+    const {color, name} = props;
 
     return(
     <div className={props.classes.root} 
     style={{backgroundColor: color}}
     >
-        {props.color}
+        {name}
     </div>
     )
 }
