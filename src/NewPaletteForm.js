@@ -6,12 +6,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { ChromePicker } from 'react-color';
 
-const drawerWidth = 240;
+const drawerWidth = 400;
 
 const styles = theme => ({
   root: {
@@ -68,6 +71,11 @@ const styles = theme => ({
     }),
     marginLeft: 0,
   },
+  buttonRange: {
+      display: "flex",
+      justifyContent:"center",
+      alignItems: "center"
+  }
 });
 
 class NewPaletteForm extends Component {
@@ -126,6 +134,27 @@ handleDrawerClose = () => {
                 <ChevronLeftIcon />
             </IconButton>
             </div>
+            <Divider />
+            <Typography variant="h4"> Design your Palette</Typography>
+            <div className={classes.buttonRange}>
+                <Button variant="contained" color="secondary">
+                    Clear Palette
+                </Button>
+                <Button variant="contained" color="primary">
+                    Random Color
+                </Button>
+            </div>
+            <ChromePicker 
+            color="purple" 
+            onChangeComplete={(newColor) => console.log(newColor) }
+            />
+            <form noValidate autoComplete="off">
+                <TextField id="filled-basic" label="Filled" variant="filled" />
+            </form>
+            <Button variant="contained" color="primary">
+                Add Color
+            </Button>
+            {/*This is where the form will be*/}
           </Drawer>
           {/* In the part below this is where the content will go */}
           <main
