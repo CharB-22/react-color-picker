@@ -91,8 +91,9 @@ class NewPaletteForm extends Component {
         this.state = { 
             open: false,
             currentColor: "skyblue",
-            newName: "",
-            colors: []
+            newColorName: "",
+            colors: [],
+            newNamePalette: "",
         };
         this.changeCurrentColor = this.changeCurrentColor.bind(this)
         this.addNewColor = this.addNewColor.bind(this);
@@ -109,9 +110,15 @@ class NewPaletteForm extends Component {
         ValidatorForm.addValidationRule("isColorUnique", value => 
             //Make sure that every single color from colors is unique
             this.state.colors.every (
-                ({ color }) => color !== this.state.currentColor
+                ({ color }) => color.toLowerCase() !== this.state.currentColor.toLowerCase()
             )
         );
+        ValidatorForm.addValidationRule("UniquePaletteName", value => 
+        //Make sure that every single color from colors is unique
+        this.props.palettes.every (
+            ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
+        )
+    );
     }
 
 
@@ -130,24 +137,23 @@ class NewPaletteForm extends Component {
     addNewColor() {
         const newColor = {
             color: this.state.currentColor,
-            name: this.state.newName
+            name: this.state.newColorName
         }
         this.setState({
             colors: [...this.state.colors, newColor]}
             );
-        this.setState({newName: ""});
+        this.setState({newColorName: ""});
     }
 
     handleChange = (event) => {
-        event.target.color = event.target.value;
-        this.setState({newName: event.target.value});
+        this.setState({[event.target.name]: event.target.value});
     }
 
     savePalette() {
-      let newName = "New Palette Test"
+      let newNamePalette = this.state.newNamePalette;
       const newPalette = {
-        paletteName: newName,
-        id: newName.toLowerCase().replace(/ /g, "-"),
+        paletteName: newNamePalette,
+        id: newNamePalette.toLowerCase().replace(/ /g, "-"),
         emoji: ":)",
         colors: this.state.colors
       }
@@ -183,6 +189,22 @@ class NewPaletteForm extends Component {
               <Typography variant="h6" noWrap>
                 Create a palette
               </Typography>
+              <ValidatorForm
+              onSubmit={this.savePalette}
+              ref='form'
+              instantValidate={false}
+              >
+              <TextValidator
+               label = "Name the Palette"
+               value={this.state.newNamePalette}
+               onChange={this.handleChange}
+               name= "newNamePalette"
+               validators={['required', 'UniquePaletteName']}
+               errorMessages={[
+                    'Enter a Palette name',
+                    'Choose a unique name'
+                  ]}
+               />
               <Link exact to="/">
                 <Button variant="contained" color="secondary">
                     Go Back
@@ -191,10 +213,11 @@ class NewPaletteForm extends Component {
                 <Button 
                 variant="contained" 
                 color="primary"
-                onClick={this.savePalette}
+                type="submit"
                 >
                     Save Palette
                 </Button>
+              </ValidatorForm>
             </Toolbar>
           </AppBar>
           <Drawer
@@ -230,9 +253,10 @@ class NewPaletteForm extends Component {
                 ref='form'
                 instantValidate={false}
             >
-                <TextValidator                    value={this.state.newName}
+                <TextValidator                    
+                    value={this.state.newColorName}
                     onChange={this.handleChange}
-                    name= "NewColorName"
+                    name= "newColorName"
                     validators={['required', "isColorNameUnique", "isColorUnique"]}
                     errorMessages={[
                     'Enter a color name', 
