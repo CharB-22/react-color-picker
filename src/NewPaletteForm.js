@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { Link } from '@material-ui/core';
 
 
 const drawerWidth = 400;
@@ -95,6 +96,7 @@ class NewPaletteForm extends Component {
         };
         this.changeCurrentColor = this.changeCurrentColor.bind(this)
         this.addNewColor = this.addNewColor.bind(this);
+        this.savePalette = this.savePalette.bind(this);
     }
 
     componentDidMount() {
@@ -141,6 +143,19 @@ class NewPaletteForm extends Component {
         this.setState({newName: event.target.value});
     }
 
+    savePalette() {
+      let newName = "New Palette Test"
+      const newPalette = {
+        paletteName: newName,
+        id: newName.toLowerCase().replace(/ /g, "-"),
+        emoji: ":)",
+        colors: this.state.colors
+      }
+      this.props.savePalette(newPalette);
+      // redirect to the homepage to see the new Palette
+      this.props.history.push("/")
+    }
+
 
   render() {
     const {classes} = this.props;
@@ -149,6 +164,7 @@ class NewPaletteForm extends Component {
         <div className={classes.root}>
           <CssBaseline />
           <AppBar
+            color="default"
             position="fixed"
             className={clsx(classes.appBar, {
               [classes.appBarShift]: open,
@@ -165,8 +181,20 @@ class NewPaletteForm extends Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap>
-                Persistent drawer
+                Create a palette
               </Typography>
+              <Link exact to="/">
+                <Button variant="contained" color="secondary">
+                    Go Back
+                </Button>
+              </Link>
+                <Button 
+                variant="contained" 
+                color="primary"
+                onClick={this.savePalette}
+                >
+                    Save Palette
+                </Button>
             </Toolbar>
           </AppBar>
           <Drawer
