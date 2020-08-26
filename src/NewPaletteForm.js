@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { ChromePicker } from 'react-color';
 import {ValidatorForm, TextValidator} from "react-material-ui-form-validator";
 import clsx from 'clsx';
-import DragabbleColorBox from './DragabbleColorBox'
+import DragabbleColorList from './DragabbleColorList'
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Link } from '@material-ui/core';
-
+import {arrayMove} from 'react-sortable-hoc';
 
 const drawerWidth = 400;
 
@@ -83,7 +83,6 @@ const styles = theme => ({
 });
 
 
-
 class NewPaletteForm extends Component {
 
     constructor(props){
@@ -98,6 +97,7 @@ class NewPaletteForm extends Component {
         this.changeCurrentColor = this.changeCurrentColor.bind(this)
         this.addNewColor = this.addNewColor.bind(this);
         this.savePalette = this.savePalette.bind(this);
+        this.removeColor = this.removeColor.bind(this);
     }
 
     componentDidMount() {
@@ -167,6 +167,13 @@ class NewPaletteForm extends Component {
         colors: this.state.colors.filter(color => color.name !== colorName )
       })
     }
+
+    onSortEnd = ({oldIndex, newIndex}) => {
+      this.setState(({colors}) => ({
+        colors: arrayMove(colors, oldIndex, newIndex),
+      }));
+    };
+
 
   render() {
     const {classes} = this.props;
@@ -284,8 +291,13 @@ class NewPaletteForm extends Component {
               [classes.contentShift]: open,
             })}
           >
-            <div className={classes.drawerHeader} />
-            {colors.map(color => <DragabbleColorBox key={color} color={color.color} name={color.name} handleClick ={() => this.removeColor(color.name)}/>)}
+            <div className={classes.drawerHeader}/> 
+            <DragabbleColorList 
+            colors= {this.state.colors} 
+            removeColor={this.removeColor}
+            axis="xy"
+            onSortEnd={this.onSortEnd}
+            />
           </main>
         </div>
       );
