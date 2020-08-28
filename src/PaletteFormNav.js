@@ -80,7 +80,7 @@ class PaletteFormNav extends Component {
                         className={classes.button}
                         onClick={this.showForm}
                         >
-                            Save Palette
+                            Save
                         </Button>
                     </div>
                 </AppBar>
