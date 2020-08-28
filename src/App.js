@@ -10,8 +10,11 @@ import {generatePalette} from "./ColorHelpers";
 class App extends Component {
   constructor(props) {
     super(props);
+    //Check if there is already some palettes saved in Local Storage
+    const savedPalettes = JSON.parse(window.localStorage.getItem("palettes"))
     this.state = {
-      palettes : ColorSeed
+      // Palettes will be then either savedPalettes if any or original ColorSeed
+      palettes : savedPalettes || ColorSeed,
     }
     this.savePalette = this.savePalette.bind(this);
     this.findPalette = this.findPalette.bind(this);
@@ -24,7 +27,13 @@ class App extends Component {
   }
 
   savePalette(newPalette) {
-    this.setState({palettes: [...this.state.palettes, newPalette]})
+    // Set the new state with the new palette created and then after, callback function to save it to the local storage
+    this.setState({palettes: [...this.state.palettes, newPalette]}, this.synchLocalStorage)
+  }
+
+  synchLocalStorage(){
+    //Save palettes to local storage
+    window.localStorage.setItem("palettes", JSON.stringify(this.state.palettes))
   }
 
   render() {
