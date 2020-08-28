@@ -20,7 +20,7 @@ class PaletteList extends Component {
                         <Link exact to="/palette/new">Create Palette</Link>
                     </nav>
                     <div className={classes.palettes}>
-                        {palette.map(p => <MiniPalette key={p.id} {...p} goToPalette={() => this.goToPalette(p.id)}/>)}
+                        {palette.map(p => <MiniPalette key={p.id} {...p} goToPalette={() => this.goToPalette(p.id)} remove={this.props.remove}/>)}
                     </div>
                 </div>
             </div>
