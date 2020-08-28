@@ -112,13 +112,9 @@ class NewPaletteForm extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    savePalette(newPaletteName) {
-      const newPalette = {
-        paletteName: newPaletteName,
-        id: newPaletteName.toLowerCase().replace(/ /g, "-"),
-        emoji: ":)",
-        colors: this.state.colors
-      }
+    savePalette(newPalette) {
+        newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, "-")
+        newPalette.colors = this.state.colors
       this.props.savePalette(newPalette);
       // redirect to the homepage to see the new Palette
       this.props.history.push("/")

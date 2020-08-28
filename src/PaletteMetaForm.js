@@ -13,12 +13,14 @@ class PaletteMetaForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: true,
+            stage: "name",
             newPaletteName:"",
         };
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.showEmojiPicker = this.showEmojiPicker.bind(this);
+        this.saveNewPalette = this.saveNewPalette.bind(this);
     }
 
     componentDidMount() {
@@ -43,17 +45,32 @@ class PaletteMetaForm extends Component {
         this.setState({open: false})
     }
 
+    showEmojiPicker() {
+        this.setState({stage: "emoji"})
+    }
+    
+    saveNewPalette(emoji) {
+        const newPalette = {
+            paletteName: this.state.newPaletteName,
+            emoji: emoji.native
+        }
+        this.props.savePalette(newPalette);
+    }
+
     render(){
-        const {open, newPaletteName} = this.state;
-        const {hideForm, savePalette} = this.props;
+        const {stage, newPaletteName} = this.state;
+        const {hideForm} = this.props;
 
         return(
             <div>
-                <Dialog open={open} onClose={hideForm} aria-labelledby="form-dialog-title">
+                <Dialog open={stage === "emoji"} onClose={hideForm} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Pick your Emoji</DialogTitle>
+                    <Picker title="Pick your emoji" onSelect={this.saveNewPalette} emoji="point_up"/>
+                </Dialog>
+                <Dialog open={stage === "name"} onClose={hideForm} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Choose a Palette Name</DialogTitle>
-                    <Picker set='apple' />
                     <ValidatorForm
-                        onSubmit={() => savePalette(newPaletteName)}
+                        onSubmit={this.showEmojiPicker}
                         ref='form'
                         instantValidate={false}
                         >
