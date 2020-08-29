@@ -1,12 +1,31 @@
 import sizes from "./Sizes";
+import svg from "./svg.svg"
 
 export default {
+    "@global": {
+        ".fade-enter-active": {
+            opacity: 0,
+            transition: "opacity 500ms ease-in"
+        },
+        ".fade-enter": {
+            opacity: 1
+        },
+        ".fade-exit": {
+            opacity: 1,
+        },
+        ".fade-exit-active":{
+            opacity: 0,
+            transition: "opacity 500ms ease-out"
+        }
+    },
     root: {
         backgroundColor: "blue",
+        backgroundImage: `url(${svg})`,
         height: "100vh",
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
+        overflow: "scroll",
     },
     container: {
         width: "80%",
@@ -41,5 +60,8 @@ export default {
         [sizes.down("xs")]: {
             gridTemplateColumns: "repeat(1, 100%)",
         }
+    },
+    heading: {
+        fontSize: "2rem"
     }
 }
