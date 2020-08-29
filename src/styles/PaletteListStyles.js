@@ -3,13 +3,6 @@ import svg from "./svg.svg"
 
 export default {
     "@global": {
-        ".fade-enter-active": {
-            opacity: 0,
-            transition: "opacity 500ms ease-in"
-        },
-        ".fade-enter": {
-            opacity: 1
-        },
         ".fade-exit": {
             opacity: 1,
         },
