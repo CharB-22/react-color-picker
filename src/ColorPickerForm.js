@@ -41,7 +41,7 @@ class ColorPickerForm extends Component {
     }
 
     render(){
-        const {classes, colors, maxColor} = this.props;
+        const {classes, colors, maxColor, addNewColor} = this.props;
         const {currentColor, newColorName} = this.state;
         const isPaletteFull = colors.length >= maxColor
         return(
@@ -52,7 +52,7 @@ class ColorPickerForm extends Component {
                 className={classes.picker}
                 />
                 <ValidatorForm
-                    onSubmit={()=> this.props.addNewColor(newColorName, currentColor)}
+                    onSubmit={()=> addNewColor(newColorName, currentColor)}
                     ref='form'
                     instantValidate={false}
                 >
@@ -61,7 +61,7 @@ class ColorPickerForm extends Component {
                         variant="filled"
                         margin= "normal"
                         placeholder="Name the color"
-                        value={this.state.newColorName}
+                        value={newColorName}
                         onChange={this.handleChange}
                         name= "newColorName"
                         validators={['required', "isColorNameUnique", "isColorUnique"]}

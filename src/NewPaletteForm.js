@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import {arrayMove} from 'react-sortable-hoc';
 import ColorPickerForm from "./ColorPickerForm";
-import clsx from 'clsx';
 import DragabbleColorList from './DragabbleColorList';
 import PaletteFormNav from "./PaletteFormNav";
 import Drawer from '@material-ui/core/Drawer';
@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {arrayMove} from 'react-sortable-hoc';
+import clsx from 'clsx';
 import styles from "./styles/NewPaletteFormStyles";
 
 
@@ -100,7 +100,7 @@ class NewPaletteForm extends Component {
 
   render() {
     const {classes, maxColor, palettes} = this.props;
-    const {open, colors} = this.state;
+    const {open, colors, newNamePalette} = this.state;
     const isPaletteFull = colors.length >= maxColor
     return (
         <div className={classes.root}>
@@ -109,7 +109,7 @@ class NewPaletteForm extends Component {
           handleDrawerOpen={this.handleDrawerOpen} 
           handleDrawerClose={this.handleDrawerClose}
           savePalette={this.savePalette}
-          paletteName={this.state.newNamePalette}
+          paletteName={newNamePalette}
           handleChange={this.handleChange}
           palettes = {palettes}
           />
@@ -164,7 +164,7 @@ class NewPaletteForm extends Component {
           >
             <div className={classes.drawerHeader}/> 
             <DragabbleColorList 
-            colors= {this.state.colors} 
+            colors= {colors} 
             removeColor={this.removeColor}
             axis="xy"
             onSortEnd={this.onSortEnd}

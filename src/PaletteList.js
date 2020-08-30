@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import MiniPalette from "./MiniPalette";
 import {Link} from "react-router-dom";
 import {withStyles} from "@material-ui/styles";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
+import MiniPalette from "./MiniPalette";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,7 +20,8 @@ class PaletteList extends Component {
         this.state = {openDialog: false, deletingId: ""};
         this.openDialog = this.openDialog.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
-        this.handleDelete = this.handleDelete.bind(this)
+        this.handleDelete = this.handleDelete.bind(this);
+        this.goToPalette = this.goToPalette.bind(this);
     }
     goToPalette(id) {
         this.props.history.push(`/palette/${id}`)
@@ -42,6 +43,7 @@ class PaletteList extends Component {
 
     render() {
         const {palette, classes} = this.props;
+        const {openDialog} = this.state;
         return(
             <div className={classes.root}>
                 <div className={classes.container} >
@@ -53,13 +55,12 @@ class PaletteList extends Component {
                             {palette.map(p =>
                             <CSSTransition key={p.id} classNames="fade" timeout={2000}>
                                 <MiniPalette key={p.id} {...p} 
-                                goToPalette={() => this.goToPalette(p.id)} 
-                                //remove={this.props.remove}
+                                goToPalette={this.goToPalette} 
                                 openDialog={this.openDialog}
                                 /></CSSTransition>)}
                     </TransitionGroup>
                 </div>
-                <Dialog open={this.state.openDialog} aria-labelledby="delete-dialog-title" onClose={this.closeDialog}>
+                <Dialog open={openDialog} aria-labelledby="delete-dialog-title" onClose={this.closeDialog}>
                         <DialogTitle id="delete-dialog-title">Do you really want to delete?</DialogTitle>
                         <ListItem button onClick={this.handleDelete} >
                             <Avatar style={{backgroundColor: "blue" }}>
