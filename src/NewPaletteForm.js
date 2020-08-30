@@ -4,6 +4,7 @@ import {arrayMove} from 'react-sortable-hoc';
 import ColorPickerForm from "./ColorPickerForm";
 import DragabbleColorList from './DragabbleColorList';
 import PaletteFormNav from "./PaletteFormNav";
+import ColorSeed from "./ColorSeed"
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -22,7 +23,7 @@ class NewPaletteForm extends Component {
     constructor(props){
         super(props);
         this.state = { 
-            colors: this.props.palettes[0].colors,
+            colors: ColorSeed[0].colors,
         };
         this.addNewColor = this.addNewColor.bind(this);
         this.savePalette = this.savePalette.bind(this);
