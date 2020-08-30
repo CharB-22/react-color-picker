@@ -10,8 +10,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import CloseIcon from '@material-ui/icons/Cancel';
 import CheckIcon from '@material-ui/icons/CheckCircle';
-
-
 import styles from "./styles/PaletteListStyles";
 
 class PaletteList extends Component {

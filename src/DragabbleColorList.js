@@ -7,7 +7,7 @@ import DragabbleColorBox from "./DragabbleColorBox";
         <div style={{height: "100%"}}>
         {colors.map((color, i) => (
             <DragabbleColorBox 
-            key={color} 
+            key={color.name} 
             color={color.color}
             index = {i} 
             name={color.name} 

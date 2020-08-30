@@ -88,12 +88,13 @@ class NewPaletteForm extends Component {
       //Combine colors from all palettes into one array:
       
       const allColors = this.props.palettes.map(palette => palette.colors).flat()
-      let x = Math.floor(Math.random() * allColors.length)
-      const randomPick = allColors[x];
-      console.log(randomPick)
-      const randomColor = {
-        name: randomPick.name,
-        color: randomPick.color,
+      let x;
+      let randomColor;
+      let isDuplicateColor = true;
+      while(isDuplicateColor){
+        x = Math.floor(Math.random() * allColors.length);
+        randomColor = allColors[x];
+        isDuplicateColor = this.state.colors.some(color => color.name === randomColor.name)
       }
       this.setState({colors: [...this.state.colors, randomColor]})
     }
